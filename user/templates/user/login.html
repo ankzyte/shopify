@@ -1,0 +1,27 @@
+{% extends 'shop/base.html' %}
+{%  block content %}
+<div class="heading">
+    <h1>Login</h1>
+</div>
+<div class="form-container">
+    {% if messages %}
+    <div class="message-box"></div>
+        {% for message in messages %}
+            <div class="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+       
+    <form method="POST">
+        {% csrf_token %}           
+        <legend>Log In</legend>
+        {{ form.as_p }}
+        <a href="{% url 'user-email' %}">Forgot password?</a>
+        <button type="submit">Log In!</button>           
+    </form>   
+        
+    <span>Don't have an account<a href="{% url 'user-register' %}">Create One</a></span>
+</div>
+{% endblock content %}

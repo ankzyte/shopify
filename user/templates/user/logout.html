@@ -1,0 +1,9 @@
+{% extends "shop/base.html" %}
+{% block content %}
+    <div class="form-container">
+        <legend>You have been logged out</legend>
+        <div class="existing-user">
+            <a href="{% url 'user-login' %}">Login Again</a>
+        </div>                        
+    </div>
+{% endblock content %}

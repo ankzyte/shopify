@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title>Shopify-{{ title }}</title>
+    {% else %}
+        <title>Shopify</title>
+    {% endif %}
+    <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+</head>
+<body>
+    <div class="navbar">
+        <div class="left-nav">
+            <a href="{% url 'shop-home' %}" id="logo">Shopify</a>
+            <a href="{% url 'shop-home' %}">Home</a>
+            <div class="dropdown">
+                <span>Electronics</span>
+                <div class="dropdown-content">
+                    <li><a href="#">Mobiles</a></li>
+                    <li><a href="#">Laptops</a></li>
+                </div>
+            </div>
+            <div class="dropdown">
+                <span>Fashion</span>
+                <div class="dropdown-content">
+                    <li><a href="#">Upperwear</a></li>
+                    <li><a href="#">Lowerwear</a></li>
+                </div>
+            </div>
+        </div>
+        <div class="right-nav">
+            {% if user.is_authenticated %}
+                <input type="search" placeholder="Search">
+                <div class="dropdown">
+                    <span>{{ user.username }}</span>
+                    <div class="dropdown-content">
+                        <li><a href="{% url 'user-profile' %}">Profile</a></li>
+                        <li><a href="{% url 'user-email' %}">Reset Password</a></li>
+                        <li><a href="{% url 'user-logout' %}">Logout</a></li>
+                    </div>
+                </div>
+                <a href="#">Cart</a>  
+            {% else %}
+                <input type="search" placeholder="Search">
+                <a href="{% url 'user-login' %}">Login</a>
+                <a href="{% url 'user-register' %}">Register</a>
+            {% endif %}
+        </div>
+    </div>
+    {% block content %}{% endblock %}
+    <script src="{% static 'shop/script.js' %}"></script>
+</body>
+</html>

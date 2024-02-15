@@ -1,0 +1,12 @@
+{% extends "user/sidebar.html" %}
+{% load static %}
+{% block content2 %}
+<div class="form-container"> 
+    <form method="POST">
+        {% csrf_token %}
+        <legend>Profile</legend>
+        {{ form.as_p }}
+        <button type="submit">Add Address</button>
+    </form>
+</div>
+{% endblock content2 %}
