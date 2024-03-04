@@ -10,6 +10,7 @@
         <title>Shopify</title>
     {% endif %}
     <link rel="stylesheet" href="{% static 'shop/style.css' %}">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 <body>
     <div class="navbar">
@@ -19,15 +20,15 @@
             <div class="dropdown">
                 <span>Electronics</span>
                 <div class="dropdown-content">
-                    <li><a href="#">Mobiles</a></li>
+                    <li><a href="{% url 'shop-product' 'mobile' %}">Mobiles</a></li>
                     <li><a href="#">Laptops</a></li>
                 </div>
             </div>
             <div class="dropdown">
                 <span>Fashion</span>
                 <div class="dropdown-content">
-                    <li><a href="#">Upperwear</a></li>
-                    <li><a href="#">Lowerwear</a></li>
+                    <li><a href="{% url 'shop-product' 'topwear' %}">Upperwear</a></li>
+                    <li><a href="{% url 'shop-product' 'bottomwear' %}">Lowerwear</a></li>
                 </div>
             </div>
         </div>
@@ -38,11 +39,11 @@
                     <span>{{ user.username }}</span>
                     <div class="dropdown-content">
                         <li><a href="{% url 'user-profile' %}">Profile</a></li>
-                        <li><a href="{% url 'user-email' %}">Reset Password</a></li>
+                        <li><a href="{% url 'user-changepass' %}">Change Password</a></li>
                         <li><a href="{% url 'user-logout' %}">Logout</a></li>
                     </div>
                 </div>
-                <a href="#">Cart</a>  
+                <a href="{% url 'user-cart' %}">Cart</a>  
             {% else %}
                 <input type="search" placeholder="Search">
                 <a href="{% url 'user-login' %}">Login</a>
@@ -51,6 +52,6 @@
         </div>
     </div>
     {% block content %}{% endblock %}
-    <script src="{% static 'shop/script.js' %}"></script>
+    <script type="text/javascript" src="{% static 'shop/script.js' %}"></script>
 </body>
 </html>

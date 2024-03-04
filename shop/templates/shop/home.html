@@ -1,4 +1,63 @@
 {% extends 'shop/base.html' %}
 {%  block content %}
+<div class="slider">
+    <img id="img-1" src="media/img-1.jpg" alt="Image 1"/>
+    <img id="img-2" src="media/img-2.jpg" alt="Image 2"/>
+    <img id="img-3" src="media/img-3.webp" alt="Image 3"/>
+</div>
+<div class="navigation-button">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+</div>
+<div class="product-type">
+    <h2>Top Wear</h2>
+</div>
+<div class="products">
+    {% for product in products %}
+        {% if product.product_type == "topwear" %}
+            <a href="#">
+                <div class="product">
+                    <img src="{{ product.image.url }}">
+                    <span class="product-name">{{ product }}</span>
+                    <span class="product-price">{{ product.price }}</span>
+                </div>
+            </a>    
+        {% endif %}
+    {% endfor %}
+</div>
 
+<div class="product-type">
+    <h2>Bottom Wear</h2>
+</div>
+<div class="products">
+    {% for product in products %}
+        {% if product.product_type == "bottomwear" %}
+            <a href="#">
+                <div class="product">
+                    <img src="{{ product.image.url }}">
+                    <span class="product-name">{{ product }}</span>
+                    <span class="product-price">{{ product.price }}</span>
+                </div>
+            </a>    
+        {% endif %}
+    {% endfor %}
+</div>
+
+<div class="product-type">
+    <h2>Mobile Phones</h2>
+</div>
+<div class="products">
+    {% for product in products %}
+        {% if product.product_type == "mobile" %}
+            <a href="#">
+                <div class="product">
+                    <img src="{{ product.image.url }}">
+                    <span class="product-name">{{ product }}</span>
+                    <span class="product-price">{{ product.price }}</span>
+                </div>
+            </a>    
+        {% endif %}
+    {% endfor %}
+</div>
 {% endblock content %}

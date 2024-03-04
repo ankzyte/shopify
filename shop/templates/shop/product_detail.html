@@ -1,0 +1,50 @@
+{% extends 'shop/base.html' %}
+{%  block content %}
+<div class="product-description">
+    <div class="product-image">
+        <img src="{{ products.image.url }}">
+    </div>
+    <div class="product-details">
+        <h1>{{ products }}</h1>
+        <p>{{ products.description }}</p>
+        <h2>Rs. {{ products.price }}</h2>
+        <button class="add-to-cart" id="create-instance-btn">Add to Cart</button>
+        <button class="buy-now">Buy Now</button>
+    </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    // Find the button element by its ID           
+            // Add an event listener to the button click event
+        var createInstanceBtn = document.getElementById('create-instance-btn');
+        var csrftoken = getCookie('csrftoken');
+                // Create the fetch request
+        fetch("checkcart/", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': csrftoken
+            },
+        })
+        .then(function(response) {
+                    // Check if the request was successful
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+                    // Parse the JSON response
+            return response.json();
+        })
+        .then(function(data) {
+                    // Handle the data received from the server
+            createInstanceBtn.classList.remove('add-to-cart');
+            createInstanceBtn.classList.add('goto-cart');
+            createInstanceBtn.innerText = 'Goto Cart';
+            console.log(data.message);  // Log success message
+        })
+        .catch(function(error) {
+                    // Handle any errors that occurred during the fetch request
+            console.error('There was a problem with the fetch operation:', error);
+        });
+    });
+</script>
+{% endblock content %}

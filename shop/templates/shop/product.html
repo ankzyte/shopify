@@ -1,0 +1,25 @@
+{% extends 'shop/base.html' %}
+{%  block content %}
+<div class="product-sidebar">
+    <ul id="filterList">
+        <li data-filter="all">All Mobiles</li>
+        <li data-filter="vivo">Vivo</li>
+        <li data-filter="xiaomi">Xiaomi</li>
+        <li data-filter="under-10000">Under 10000</li>
+        <li data-filter="under-20000">Under 20000</li>
+    </ul>
+</div>
+<div class="product-container" id="product-container">
+    {% for product in products %}
+        {% if product.product_type == type %}
+            <a href="{% url 'product-detail' product.product_type product.id %}">
+                <div class="product">
+                    <img src="{{ product.image.url }}">
+                    <span class="product-name">{{ product }}</span>
+                    <span class="product-price">{{ product.price }}</span>                 
+                </div>
+            </a>    
+        {% endif %}
+    {% endfor %}
+</div>
+{% endblock content %}

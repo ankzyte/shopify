@@ -1,0 +1,31 @@
+{% extends 'shop/base.html' %}
+{%  block content %}
+<h1 style="text-align: center;">Shopping Cart</h1>
+<div class="cart-container">
+    <div class="cart-items">
+        {% for cart in carts %}
+            <h2>Cart Items:</h2>
+            {% for item in cart.products.all %}
+                <div class="cart-item">
+                    <div class="cart-item-img">
+                        <img src="{{ item.image.url }}">
+                    </div>
+                    <div class="cart-item-desc">
+                        <h3>{{ item.name }}</h3>
+                        <p>Quantity: <span class="quantity"><i class='bx bxs-plus-circle' ></i> 1 <i class='bx bxs-minus-circle' ></i></span></p>
+                        <button>Remove item</button><span class="price">{{ item.price }}</span>
+                    </div>               
+                </div>          
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <div class="amount-container">
+        <h2>Total Amount</h2>
+        <div><span>Amount</span><span id="amount">Rs 100</span></div>
+        <div><span>Shipping</span><span>Rs 100</span></div>
+        <div><span>Total</span><span id="total-amount">Rs 200</span></div>
+        <button>Place Order</button>
+    </div>
+</div>
+
+{% endblock content %}

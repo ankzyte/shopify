@@ -1,12 +1,13 @@
 from django.shortcuts import render,redirect
 from .forms import UserRegisterForm, CreateProfileForm
-from .models import Profile
+from .models import Profile,Cart
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.template.loader import render_to_string
 from django.contrib import messages
+from django.contrib.auth import authenticate, login
 # Create your views here.
 
 def register(request):
@@ -23,7 +24,7 @@ def register(request):
     return render(request, 'user/register.html',context)
 
 @login_required
-def profile(request):
+def createProfile(request):
     user_profiles = Profile.objects.filter(user=request.user)
     if request.method=="POST":
         form = CreateProfileForm(request.POST)
@@ -76,7 +77,7 @@ def passwordReset(request, user_id, token):
     if default_token_generator.check_token(user, token):
         if request.method == 'POST':
             # Validate and update password
-            new_password = request.POST['new_password']
+            new_password = request.POST['new-password']
             user.set_password(new_password)
             user.save()
             messages.success(request,'Password has been reset successfully!')
@@ -87,12 +88,21 @@ def passwordReset(request, user_id, token):
 
 def changePassword(request):
     if request.method=="POST":
-        old_password = request.POST['old_password']
+        old_password = request.POST['old-password']
         if request.user.check_password(old_password):
-            new_password=request.POST['new_password']
+            new_password=request.POST['new-password']
             request.user.set_password(new_password)
             request.user.save()
-            return redirect('shop-home')
-        else:
-            return render(request,'user/change_password.html')
+            messages.success(request,'Password successfully changed!')
+            user = authenticate(username=request.user.username, password=new_password)
+            if user is not None:
+                login(request, user)
+            return redirect('user-changepass')
     return render(request,'user/change_password.html')
+
+@login_required
+def showCart(request):
+    context = {
+        'carts':Cart.objects.filter(user=request.user)
+    }
+    return render(request,'user/cart.html',context)
